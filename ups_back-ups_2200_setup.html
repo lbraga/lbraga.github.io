@@ -2,15 +2,59 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="style.css" media="all" />
   </head>
   <body>
-    <p>Plug Back-UPS usb cable</p>
-    <p>$ tail -f /var/log/messages | grep USB</p>
-    <p>Feb 21 09:20:44 myserver kernel: [44007.305321] usb 2-1.6: USB disconnect, address 9</p>
-    <p>Feb 21 09:20:51 myserver kernel: [44014.192650] usb 2-1.6: new full speed USB device using ehci_hcd and address 10</p>
-    <p>Feb 21 09:20:51 myserver kernel: [44014.308544] cdc_acm 2-1.6:1.0: ttyACM0: USB ACM device</p>
-    <p>Feb 21 09:30:13 myserver kernel: [44575.752034] usb 2-1.6: USB disconnect, address 10</p>
+    <br/>
+    <a href="index.html">Index</a>
+    <br/>
+    <p>Luís Felipe Braga - luis.felipe.braga@gmail.com</p>
+    <br/>
+    <h3>Acpupsd setup for Back-UPS 2200 (BZ2200I-BR and BZ2200BI-BR) with Usb Cable in Ubuntu 10.04.</h3>
+    <br/>
+    <p>1) Find ACM (Abstract Control Model) emulated serial port over USB</p>
+    <br/>
+    <p>Plug Back-UPS usb cable:</p>
+    <p>$ tail -f /var/log/messages | grep USB</p>    
     <p>Feb 21 09:30:16 myserver kernel: [44578.570372] usb 2-1.6: new full speed USB device using ehci_hcd and address 11</p>
     <p>Feb 21 09:30:16 myserver kernel: [44578.685878] cdc_acm 2-1.6:1.0: <b>ttyACM0</b>: USB ACM device</p>
+    <br/>
+    <p>2) Config</p>
+    <br/>
+    <p>Edit apcupsd.conf:</p>    
+    <p>$ sudo vi /etc/apcupsd/apcupsd.conf</p>
+    <p>UPSNAME apc2200</p>
+    <p>UPSCABLE simple</p>
+    <p>UPSTYPE dumb</p>
+    <p>DEVICE /dev/<b>ttyACM0</b></p>
+    <br/>
+    <p>Edit apcupsd:</p>
+    <p>$ sudo vi /etc/default/apcupsd</p>
+    <p>ISCONFIGURED=yes</p>
+    <br/>
+    <p>3) Start service</p>
+    <p>$ sudo /etc/init.d/apcupsd start</p>
+    <br/>
+    <p>4) Verify installation</p>
+    <p>$ apcaccess status</p>
+    APC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 001,018,0465<br />
+    DATE&nbsp;&nbsp;&nbsp;&nbsp; : Fri Feb 21 09:40:09 BRT 2014<br />
+    HOSTNAME : server<br />
+    VERSION&nbsp;&nbsp;: 3.14.6 (16 May 2009) debian<br />
+    UPSNAME&nbsp;&nbsp;: apc2200<br />
+    CABLE&nbsp;&nbsp;&nbsp;&nbsp;: Custom Cable Simple<br />
+    MODEL&nbsp;&nbsp;&nbsp;&nbsp;: DUMB UPS Driver<br />
+    UPSMODE&nbsp;&nbsp;: Stand Alone<br />
+    STARTTIME: Fri Feb 21 09:40:07 BRT 2014<br />
+    STATUS&nbsp;&nbsp; : ONLINE <br />
+    MBATTCHG : 5 Percent<br />
+    MINTIMEL : 3 Minutes<br />
+    MAXTIME&nbsp;&nbsp;: 0 Seconds<br />
+    NUMXFERS : 0<br />
+    TONBATT&nbsp;&nbsp;: 0 seconds<br />
+    CUMONBATT: 0 seconds<br />
+    XOFFBATT : N/A<br />
+    STATFLAG : 0x07000008 Status Flag<br />
+    END APC&nbsp;&nbsp;: Fri Feb 21 11:35:51 BRT 2014
   </body>
 </head>
