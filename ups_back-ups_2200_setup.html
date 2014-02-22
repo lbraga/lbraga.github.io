@@ -11,16 +11,15 @@
     <p>Luís Felipe Braga - luis.felipe.braga@gmail.com</p>
     <br/>
     <h3>Acpupsd setup for Back-UPS 2200 (BZ2200I-BR and BZ2200BI-BR) with Usb Cable in Ubuntu 10.04.</h3>
-    <br/>
-    <p>1) Find ACM (Abstract Control Model) emulated serial port over USB</p>
-    <br/>
-    <p>Plug Back-UPS usb cable:</p>
+    <p>1) Find ACM (Abstract Control Model) emulated serial port over USB - Plug Back-UPS usb cable!</p>
     <p>$ tail -f /var/log/messages | grep USB</p>    
     <p>Feb 21 09:30:16 myserver kernel: [44578.570372] usb 2-1.6: new full speed USB device using ehci_hcd and address 11</p>
     <p>Feb 21 09:30:16 myserver kernel: [44578.685878] cdc_acm 2-1.6:1.0: <b>ttyACM0</b>: USB ACM device</p>
     <br/>
-    <p>2) Config</p>
+    <p>2) Install</p>
+    <p>$ sudo apt-get install apcupsd</p>
     <br/>
+    <p>3) Config</p>
     <p>Edit apcupsd.conf:</p>    
     <p>$ sudo vi /etc/apcupsd/apcupsd.conf</p>
     <p>UPSNAME apc2200</p>
@@ -32,10 +31,10 @@
     <p>$ sudo vi /etc/default/apcupsd</p>
     <p>ISCONFIGURED=yes</p>
     <br/>
-    <p>3) Start service</p>
+    <p>4) Start service</p>
     <p>$ sudo /etc/init.d/apcupsd start</p>
     <br/>
-    <p>4) Verify installation</p>
+    <p>5) Verify installation</p>
     <p>$ apcaccess status</p>
     APC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 001,018,0465<br />
     DATE&nbsp;&nbsp;&nbsp;&nbsp; : Fri Feb 21 09:40:09 BRT 2014<br />
